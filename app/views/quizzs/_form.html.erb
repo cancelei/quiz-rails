@@ -1,0 +1,37 @@
+<%= form_with(model: quizz, local: true, data: { controller: "nested-form", nested_form_wrapper_selector: ".nested-fields" }) do |form| %>
+  <% if quizz.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(quizz.errors.count, "error") %> prohibited this quizz from being saved:</h2>
+      <ul>
+        <% quizz.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <template data-nested-form-target="template">
+    <%= form.fields_for :questions, Question.new, child_index: 'NEW_RECORD' do |question_fields| %>
+      <%= render 'question_fields', f: question_fields %>
+    <% end %>
+  </template>
+
+  <div data-nested-form-target="target"></div>
+
+  <%= form.fields_for :questions do |question_fields| %>
+    <%= render 'question_fields', f: question_fields %>
+  <% end %>
+
+  <div class="mb-3">
+    <%= link_to "Add Question", "#", data: { action: "click->nested-form#add" }, class: "btn btn-primary" %>
+  </div>
+
+  <div>
+    <%= form.submit class: "btn btn-success" %>
+  </div>
+<% end %>

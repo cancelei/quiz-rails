@@ -57,3 +57,14 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "simple_form", "~> 5.3"
+gem "devise", "~> 4.9"
+
+gem "foreman"
+
+gem "sass-rails"
+# Alternative options:
+# gem "sass-rails" # Older, but still maintained
+# gem "dartsass-rails" # Newer, using Dart Sass
+gem 'bootstrap', '~> 5.3.0'

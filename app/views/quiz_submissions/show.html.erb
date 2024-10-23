@@ -1,0 +1,23 @@
+<h2>Your Quiz Score: <%= @quiz_submission.scores.round(2) %> / <%= @quizz.questions.count %></h2>
+
+<% @quizz.questions.each do |question| %>
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Question <%= question.id %></h5>
+      <p class="card-text"><%= question.content %></p>
+      <%= question.image.present? ? image_tag(question.image, class: "img-fluid") : "No image" %>
+      <% 1.upto(4) do |answer_index| %>
+        <% selected_answer = @quiz_submission.user_answers[question.id.to_s].to_i %>
+        <div class="form-check">
+          <% if answer_index == question.correct_answer %>
+            <strong>Correct Answer: </strong> <%= question.send("answer#{answer_index}") %>
+          <% elsif answer_index == selected_answer %>
+            <strong>Your Incorrect Answer: </strong> <%= question.send("answer#{answer_index}") %>
+          <% else %>
+            <%= question.send("answer#{answer_index}") %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
